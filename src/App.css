@@ -1,0 +1,834 @@
+/* Mobile first: these are the phone styles. Wider screens are adjusted at the end. */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0 var(--gutter-right) 0 var(--gutter-left);
+  background: var(--surface);
+}
+
+.save-warning {
+  margin: max(12px, env(safe-area-inset-top)) 0 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.todo-area {
+  flex: 1;
+  padding-bottom: 8px;
+}
+
+/* Main page: the main items as squares, two per row */
+
+.home {
+  flex: 1;
+  padding: max(20px, env(safe-area-inset-top)) 0 16px;
+}
+
+.square-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.square {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-hover);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.12s, background-color 0.12s;
+}
+
+.square:active {
+  transform: scale(0.97);
+}
+
+.square:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.square-title {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.square-progress {
+  display: grid;
+  gap: 6px;
+}
+
+.square-count {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+.square.is-completed {
+  border-color: transparent;
+  background: var(--success-soft);
+}
+
+.square.is-completed .square-count,
+.page-progress.is-completed .square-count {
+  color: var(--success);
+}
+
+.square.is-completed .progress-bar > span,
+.page-progress.is-completed .progress-bar > span {
+  background: var(--success-check);
+}
+
+.add-square {
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--control);
+  background: transparent;
+  color: var(--muted);
+}
+
+.add-square svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Bottom of the screen: messages, and the round + button in the corner */
+
+.bottom-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  /* Taps on the empty space around the button and the message reach the list below. */
+  pointer-events: none;
+}
+
+.bottom-dock > * {
+  pointer-events: auto;
+}
+
+.bottom-dock .notice-region {
+  align-self: stretch;
+}
+
+.fab {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--fab-shadow);
+  cursor: pointer;
+  transition: transform 0.12s, background-color 0.12s;
+}
+
+.fab svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.5;
+}
+
+.fab:active {
+  transform: scale(0.94);
+  background: var(--accent-hover);
+}
+
+.fab:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* An item's page: header with back arrow, progress, the list inside */
+
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 calc(-1 * var(--gutter-right)) 0 calc(-1 * var(--gutter-left));
+  padding: max(8px, env(safe-area-inset-top)) var(--gutter-right) 8px var(--gutter-left);
+  background: var(--surface);
+}
+
+.page-header .page-button {
+  width: 44px;
+  height: 44px;
+  color: var(--text);
+}
+
+.page-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.page-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.page-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 8px 4px;
+  overflow-wrap: anywhere;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  cursor: text;
+}
+
+.page-header .page-title-input {
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.page-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 0 8px;
+}
+
+.page-actions .action {
+  display: inline-flex;
+  gap: 6px;
+  width: auto;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.page-actions .action.danger {
+  color: var(--danger);
+}
+
+.page-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 4px 12px;
+}
+
+.page-progress .progress-bar {
+  flex: 1;
+}
+
+/* The page to type a new title: says where the new item goes */
+.new-context {
+  margin: 0;
+  padding: 0 4px 0 52px;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Messages, such as Undo */
+
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 4px 4px 14px;
+  border-radius: 12px;
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  box-shadow: var(--shadow);
+  animation: notice-in 0.18s ease-out;
+}
+
+@keyframes notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.notice-message {
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.95rem;
+}
+
+.notice-action {
+  flex: none;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--toast-action);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notice .notice-close {
+  width: 40px;
+  height: 44px;
+  color: var(--toast-text);
+}
+
+/* Text fields */
+
+.text-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.text-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* The bar below a row to add items inside it */
+
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 2px 0 10px calc(var(--guide-offset) + var(--indent-gap) + 2px);
+}
+
+.add-form .text-input {
+  flex-basis: 100%;
+}
+
+.button {
+  flex: 1;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.button:active:not(:disabled) {
+  background: var(--pressed);
+}
+
+.button-primary:active:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:focus-visible,
+.icon-button:focus-visible,
+.drag-handle:focus-visible,
+.notice-action:focus-visible,
+.todo-checkbox:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Lists */
+
+.todo-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sub-list {
+  margin-left: var(--guide-offset);
+  padding-left: var(--indent-gap);
+  border-left: 2px solid var(--guide);
+}
+
+.todo {
+  position: relative;
+  border-radius: var(--radius);
+  /* Keeps an item that is scrolled into view clear of the + button. */
+  scroll-margin-top: 12px;
+  scroll-margin-bottom: 100px;
+}
+
+/* Briefly highlighted after it was added. */
+.todo.just-added > .todo-row {
+  animation: just-added 1.6s ease-out;
+}
+
+@keyframes just-added {
+  0%,
+  35% {
+    background: var(--accent-soft);
+  }
+}
+
+.todo.is-dragging {
+  z-index: 10;
+  background: var(--surface);
+  box-shadow: var(--shadow-drag);
+}
+
+.todo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  min-height: 48px;
+  border-radius: var(--radius);
+}
+
+.icon-button {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icon-button:active:not(:disabled) {
+  background: var(--pressed);
+  color: var(--text);
+}
+
+/* Drag handle with the rank: one big target for the thumb. */
+.drag-handle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 48px;
+  height: 44px;
+  padding: 0 6px 0 4px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.drag-handle svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.drag-handle:active:not(:disabled),
+.is-dragging .drag-handle {
+  background: var(--accent-soft);
+  cursor: grabbing;
+}
+
+.drag-handle:disabled {
+  cursor: default;
+}
+
+.drag-handle:disabled svg {
+  opacity: 0.25;
+}
+
+.rank {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--rank-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.collapse-toggle,
+.collapse-spacer {
+  flex: none;
+  width: 34px;
+}
+
+.collapse-toggle svg {
+  transition: transform 0.15s;
+}
+
+.collapse-toggle[aria-expanded='false'] svg {
+  transform: rotate(-90deg);
+}
+
+/* Checkbox */
+
+.checkbox-hit {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.todo-checkbox {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border: 2px solid var(--control);
+  border-radius: 7px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+.todo-checkbox::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--on-accent);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transition: transform 0.12s;
+}
+
+.todo-checkbox:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.todo-checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* A todo with sub todos completes by itself: dashed until all of them are done. */
+.todo-checkbox[aria-disabled='true'] {
+  border-style: dashed;
+  background: transparent;
+  cursor: help;
+}
+
+.todo-checkbox[aria-disabled='true']:checked {
+  border-style: solid;
+  border-color: var(--success-check);
+  background: var(--success-check);
+}
+
+/* Title and progress */
+
+.todo-main {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 8px;
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.todo-title {
+  flex: 1 1 10ch;
+  min-width: 0;
+  padding: 8px 0;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.title-input {
+  flex: 1 1 10ch;
+}
+
+.is-completed > .todo-row .todo-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.progress {
+  flex: none;
+  margin-left: auto;
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-hover);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.is-completed > .todo-row .progress {
+  border-color: transparent;
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+/* Actions: behind the "more" button on phones, a row of labelled buttons when open. */
+
+.todo-actions {
+  display: none;
+}
+
+.todo-actions.is-open {
+  display: flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 0 8px;
+}
+
+.todo-actions .action {
+  display: inline-flex;
+  gap: 6px;
+  width: auto;
+  min-width: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.action-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.todo-actions .action.danger {
+  color: var(--danger);
+}
+
+/* Mouse and trackpad: hover feedback (kept off touch screens, where hover sticks). */
+@media (hover: hover) {
+  .todo-row:hover,
+  .todo-row:focus-within {
+    background: var(--surface-hover);
+  }
+
+  .icon-button:hover:not(:disabled),
+  .drag-handle:hover:not(:disabled) {
+    background: var(--border);
+    color: var(--text);
+  }
+
+  .icon-button.danger:hover {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+
+  .fab:hover {
+    background: var(--accent-hover);
+  }
+
+  .button:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+
+  .button-primary:hover:not(:disabled) {
+    border-color: var(--accent-hover);
+    background: var(--accent-hover);
+  }
+
+  .todo-checkbox:hover:not([aria-disabled='true']) {
+    border-color: var(--accent);
+  }
+  .square:hover {
+    border-color: var(--control);
+  }
+}
+
+/* Tablets and desktops: a card, with every action visible on the row. */
+@media (min-width: 640px) {
+  .app {
+    max-width: 780px;
+    min-height: 0;
+    margin: 40px auto;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .bottom-dock {
+    padding-bottom: 24px;
+  }
+
+  .add-form {
+    flex-wrap: nowrap;
+  }
+
+  .add-form .text-input {
+    flex-basis: auto;
+  }
+
+  .add-form .button {
+    flex: none;
+  }
+
+  .todo-row {
+    gap: 4px;
+    min-height: 44px;
+    padding: 0 4px;
+  }
+
+  .todo-title {
+    padding: 6px 0;
+    cursor: text;
+  }
+
+  .drag-handle,
+  .icon-button,
+  .checkbox-hit {
+    height: 36px;
+  }
+
+  .icon-button {
+    width: 32px;
+  }
+
+  .collapse-toggle,
+  .collapse-spacer {
+    width: 30px;
+  }
+
+  .checkbox-hit {
+    width: 32px;
+  }
+
+  .todo-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+  }
+
+  .more-button {
+    display: none;
+  }
+
+  .todo-actions,
+  .todo-actions.is-open {
+    display: flex;
+    flex-basis: auto;
+    gap: 0;
+    padding: 0;
+  }
+
+  .todo-actions .action {
+    width: 32px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    color: var(--muted);
+  }
+
+  .todo-actions .action.danger {
+    color: var(--muted);
+  }
+
+  .action-label {
+    display: none;
+  }
+
+  .home {
+    padding-top: 28px;
+  }
+
+  .square-grid {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    padding-top: 16px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .page-actions .action {
+    width: auto;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fab,
+  .todo.just-added > .todo-row,
+  .square,
+  .progress-bar > span,
+  .todo,
+  .notice,
+  .collapse-toggle svg,
+  .text-input,
+  .todo-checkbox,
+  .todo-checkbox::before {
+    transition: none !important;
+    animation: none !important;
+  }
+}

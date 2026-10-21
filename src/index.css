@@ -1,0 +1,131 @@
+:root {
+  --bg: #f3f4f7;
+  --surface: #ffffff;
+  --surface-hover: #f5f6fa;
+  --pressed: #e9ebf1;
+  --border: #e3e5ec;
+  --guide: #e0e3ea;
+  --text: #1c1f26;
+  --muted: #5f6573;
+  --control: #8a90a0;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eceafd;
+  --on-accent: #ffffff;
+  --rank-text: #4f46e5;
+  --success: #166534;
+  --success-check: #16a34a;
+  --success-soft: #e3f5e9;
+  --danger: #b4410c;
+  --danger-soft: #fdece4;
+  --warning-bg: #fff6e0;
+  --warning-text: #6e4300;
+  --toast-bg: #1f222b;
+  --toast-text: #f3f4f7;
+  --toast-action: #b9b5ff;
+  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 8px 24px rgb(16 24 40 / 6%);
+  --shadow-drag: 0 10px 30px rgb(16 24 40 / 20%);
+  --fab-shadow: 0 6px 16px rgb(79 70 229 / 35%), 0 2px 4px rgb(16 24 40 / 15%);
+  --radius: 10px;
+  /* Space at the screen edges, and around the notch / home indicator on phones. */
+  --gutter-left: max(12px, env(safe-area-inset-left));
+  --gutter-right: max(12px, env(safe-area-inset-right));
+  /* Nested lists: distance to the guide line, then from the guide line to the sub todos. */
+  --guide-offset: 8px;
+  --indent-gap: 6px;
+
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* 16px keeps iOS from zooming in when a text field is focused. */
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1116;
+    --surface: #181b22;
+    --surface-hover: #20242d;
+    --pressed: #2a2f3a;
+    --border: #2b303b;
+    --guide: #2b303b;
+    --text: #e8eaf0;
+    --muted: #9ba1b0;
+    --control: #6f7689;
+    --accent: #8b85ff;
+    --accent-hover: #a29dff;
+    --accent-soft: #272546;
+    --on-accent: #11131a;
+    --rank-text: #b0abff;
+    --success: #4ade80;
+    --success-check: #4ade80;
+    --success-soft: #16301f;
+    --danger: #fb923c;
+    --danger-soft: #3a2116;
+    --warning-bg: #3a2c0c;
+    --warning-text: #ffd98a;
+    --toast-bg: #e8eaf0;
+    --toast-text: #1c1f26;
+    --toast-action: #4338ca;
+    --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px rgb(0 0 0 / 25%);
+    --shadow-drag: 0 10px 30px rgb(0 0 0 / 55%);
+    --fab-shadow: 0 6px 18px rgb(0 0 0 / 55%);
+
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Set on body only (not :root), so it fills the whole window. */
+body {
+  margin: 0;
+  background: var(--surface);
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+/* No double-tap zoom on controls, so quick taps on checkboxes stay taps. */
+button,
+input,
+label {
+  touch-action: manipulation;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter-left: 28px;
+    --gutter-right: 28px;
+    --guide-offset: 21px;
+    --indent-gap: 10px;
+  }
+
+  body {
+    background: var(--bg);
+  }
+}
