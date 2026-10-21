@@ -19,11 +19,11 @@ export default defineConfig({
     // The main target: a phone, with touch.
     { name: 'phone', testMatch: 'mobile.spec.ts', use: { ...devices['Pixel 7'], channel } },
     { name: 'desktop', testMatch: 'todos.spec.ts', use: { ...devices['Desktop Edge'], channel } },
-    // The installable app needs the production build, where the service worker runs.
+    // The production build (where the service worker runs), served from a sub-folder like GitHub Pages does.
     {
       name: 'installed app',
       testMatch: 'pwa.spec.ts',
-      use: { ...devices['Pixel 7'], channel, baseURL: `http://localhost:${previewPort}` },
+      use: { ...devices['Pixel 7'], channel, baseURL: `http://localhost:${previewPort}/x/` },
     },
   ],
   webServer: [
@@ -33,8 +33,8 @@ export default defineConfig({
       reuseExistingServer: true,
     },
     {
-      command: `npm run build && npm run preview -- --port ${previewPort} --strictPort`,
-      url: `http://localhost:${previewPort}`,
+      command: `npm run build && npm run preview -- --port ${previewPort} --strictPort --base /x/`,
+      url: `http://localhost:${previewPort}/x/`,
       reuseExistingServer: true,
       timeout: 120_000,
     },

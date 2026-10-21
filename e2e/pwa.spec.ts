@@ -1,7 +1,28 @@
 import { expect, test } from '@playwright/test'
-import { back, createSquare, squareTitles } from './helpers'
+import { addInside, addWithPlus, back, createSquare, squareTitles, startFresh } from './helpers'
 
-// Runs against the production build (`vite preview`), where the service worker is active.
+// Runs against the production build (`vite preview`), where the service worker is active,
+// served from the /x/ sub-folder the way GitHub Pages serves it.
+
+test('works from a sub-folder, like on GitHub Pages', async ({ page }) => {
+  const problems: string[] = []
+  page.on('pageerror', (error) => problems.push(error.message))
+  page.on('response', (response) => {
+    if (response.status() >= 400) problems.push(`${response.status()} ${response.url()}`)
+  })
+  await startFresh(page)
+  expect(new URL(page.url()).pathname).toBe('/x/')
+  await createSquare(page, 'Trip')
+  await addWithPlus(page, 'Trip', ['Packing'])
+  await addInside(page, 'Packing', ['Clothes'])
+  await page.reload()
+  await expect(page.getByRole('checkbox', { name: 'Clothes' })).toBeVisible()
+  await back(page)
+  expect(await squareTitles(page)).toEqual(['Trip'])
+  const scope = await page.evaluate(async () => (await navigator.serviceWorker.ready).scope)
+  expect(new URL(scope).pathname).toBe('/x/')
+  expect(problems).toEqual([])
+})
 
 test('can be installed: manifest and icons are served', async ({ page, request }) => {
   await page.goto('./')

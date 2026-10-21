@@ -16,8 +16,10 @@ To see the phone layout on a PC: open DevTools (F12), press Ctrl+Shift+M and pic
 
 - **Quick try (same Wi-Fi):** run `npm run dev:phone` and open the "Network" address it prints (e.g. `http://192.168.1.20:5173`)
   on your phone. Windows may ask to allow Node.js through the firewall.
-- **Install it as an app (home screen, full screen, works offline):** the browser only allows this over **https**.
-  Run `npm run build` and put the `dist/` folder on any static host with https (Netlify, Vercel, GitHub Pages, Cloudflare Pages…).
+- **Install it as an app (home screen, full screen, works offline):** the browser only allows this over **https**,
+  so host it. **GitHub Pages:** `.github/workflows/deploy.yml` builds and publishes the app on every push to `main`;
+  once, set the repository's Settings → Pages → Source to **GitHub Actions**. (Other hosts: run `npm run build` and
+  upload the `dist/` folder. Uploading the source files does not work; the browser needs the built app.)
   Then open it on the phone and choose **Add to Home Screen** (iPhone: Share menu; Android: browser menu or the install prompt).
 
 Everything is saved on the device (in the browser's storage), so each phone or browser has its own data.
